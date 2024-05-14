@@ -57,6 +57,40 @@ public class CourseController: Controller
         await _db.SaveChangesAsync();
         return RedirectToAction("Index");
     }
+    
+    // public async Task<IActionResult> Delete(int? id)
+    // {
+    //     if (!id.HasValue)
+    //     {
+    //         return NotFound();
+    //     }
+    //
+    //     var course = await _db.Courses.FindAsync(id.Value);
+    //     if (course == null)
+    //     {
+    //         return NotFound();
+    //     }
+    //
+    //     return View(course);
+    // }
+    //
+    
+    [HttpPost]
+    public async Task<IActionResult> Delete(int? id)
+    {
+        if (!id.HasValue)
+        {
+            return NotFound();
+        }
+        var course = await _db.Courses.FindAsync(id.Value);
+        if (course == null)
+        {
+            return NotFound();
+        }
+        _db.Courses.Remove(course);
+        await _db.SaveChangesAsync();
+        return RedirectToAction("Index");
+    }
 
     
 }
