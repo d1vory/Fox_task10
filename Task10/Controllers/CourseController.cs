@@ -19,6 +19,21 @@ public class CourseController: Controller
         return View(courses);
     }
     
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+    // public async Task<IActionResult> Edit(int? id)
+    // {
+    //     if (!id.HasValue)
+    //     {
+    //         return NotFound();
+    //     }
+    //
+    //     var course = await _db.FindAsync(id.Value);
+    //
+    // }
     
     
 }
