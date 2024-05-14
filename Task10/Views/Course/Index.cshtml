@@ -16,16 +16,16 @@
                         <div class="fw-bold">@item.Name</div>
                         @item.Description
                     </div>
-                    <span class="badge bg-primary rounded-pill">temp</span>
-                    <span class="badge bg-primary rounded-pill">temp2</span>
-                    <span class="badge bg-primary rounded-pill">temp3</span>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary rounded-pill">Edit</a>
+                        <a class="btn btn-danger rounded-pill">Delete</a>
+                        <a class="btn btn-secondary rounded-pill">Groups</a>
                 </li>
             }
         </ol>
     </div>
     
-    <div>
-        
+    <div class="container m-1">
+        <a class="btn btn-primary" asp-action="Create">Create</a>
     </div>
 
 </div>
