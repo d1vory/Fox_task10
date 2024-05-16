@@ -1,0 +1,32 @@
+@model IEnumerable<Student>
+
+
+
+<div>
+    <div>
+        <h1 class="">Students</h1>
+    </div>
+
+    <div>
+        <ol class="list-group list-group-numbered">
+
+            @foreach (var item in Model)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">@item.FirstName @item.LastName</div>
+                    </div>
+                    <a asp-action="Edit" asp-route-groupId="@item.Id" asp-route-courseId="@ViewBag.CourseId" class="btn btn-primary rounded-pill">Edit</a>
+                    @* <form asp-action="Delete" method="post" asp-route-groupId="@item.Id" asp-route-courseId="@ViewBag.CourseId" > *@
+                    @*     <input class="btn btn-danger rounded-pill" type="submit" value="Delete"/> *@
+                    @* </form> *@
+                </li>
+            }
+        </ol>
+    </div>
+    
+    <div class="container m-1">
+        <a class="btn btn-primary" asp-action="Create" asp-route-courseId="@ViewBag.CourseId" asp-route-groupId="@ViewBag.groupId">Create</a>
+    </div>
+
+</div>

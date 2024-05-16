@@ -1,0 +1,25 @@
+@model Student
+
+<div>
+    
+    <div>
+        <h2>Add new group</h2>
+    </div>
+    
+    <div>
+        <form asp-action="Create" asp-controller="Student">
+            <div class="mb-3">
+                <label asp-for="FirstName" class="form-label"></label>
+                <input asp-for="FirstName" class="form-control" >
+            </div>
+            
+            <div class="mb-3">
+                <label asp-for="LastName" class="form-label"></label>
+                <input asp-for="LastName" class="form-control" >
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        
+    </div>
+</div>

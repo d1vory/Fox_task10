@@ -20,7 +20,8 @@
                     <form asp-action="Delete" method="post" asp-route-groupId="@item.Id" asp-route-courseId="@ViewBag.CourseId" >
                         <input class="btn btn-danger rounded-pill" type="submit" value="Delete"/>
                     </form>
-                    <a class="btn btn-secondary rounded-pill">Students</a>
+                    <a asp-controller="Student" asp-action="Index" asp-route-groupId="@item.Id" asp-route-courseId="@ViewBag.CourseId" 
+                       class="btn btn-secondary rounded-pill">Students</a>
                 </li>
             }
         </ol>
