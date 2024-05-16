@@ -7,7 +7,7 @@ using Task10.Models;
 namespace Task10.Controllers;
 
 [Route("courses/{courseId}/groups/{GroupId}/students")]
-public class StudentController: Controller
+public class StudentController : Controller
 {
     private readonly ApplicationContext _db;
 
@@ -15,8 +15,8 @@ public class StudentController: Controller
     {
         _db = db;
     }
-    
-    
+
+
     [Route("")]
     public async Task<IActionResult> Index(int? courseId, int? groupId)
     {
@@ -30,7 +30,7 @@ public class StudentController: Controller
         ViewBag.GroupId = groupId;
         return View(students);
     }
-    
+
     [Route("create")]
     public IActionResult Create(int? courseId, int? groupId)
     {
@@ -38,14 +38,70 @@ public class StudentController: Controller
         {
             return NotFound();
         }
+
         return View();
     }
-    
+
     [HttpPost]
     [Route("create")]
     public async Task<IActionResult> Create(int? courseId, int? groupId, Student student)
     {
         await _db.Students.AddAsync(student);
+        await _db.SaveChangesAsync();
+        return RedirectToAction("Index", new { courseId, groupId });
+    }
+
+    [Route("{studentId}/edit")]
+    public async Task<IActionResult> Edit(int? courseId, int? groupId, int? studentId)
+    {
+        if (!courseId.HasValue || !groupId.HasValue || !studentId.HasValue)
+        {
+            return NotFound();
+        }
+
+        var student = await _db.Students.FindAsync(studentId.Value);
+        if (student == null)
+        {
+            return NotFound();
+        }
+
+        ViewBag.CourseId = courseId;
+        ViewBag.groupId = groupId;
+        return View(student);
+    }
+
+
+    [HttpPost]
+    [Route("{studentId}/edit")]
+    public async Task<IActionResult> Edit(int? courseId, int? groupId, int? studentId, Student student)
+    {
+        if (!courseId.HasValue || !groupId.HasValue || !studentId.HasValue)
+        {
+            return NotFound();
+        }
+
+        student.Id = studentId.Value;
+        _db.Students.Update(student);
+        await _db.SaveChangesAsync();
+        return RedirectToAction("Index", new { courseId, groupId });
+    }
+
+    [HttpPost]
+    [Route("{studentId}/delete")]
+    public async Task<IActionResult> Delete(int? courseId, int? groupId, int? studentId)
+    {
+        if (!courseId.HasValue || !groupId.HasValue || !studentId.HasValue)
+        {
+            return NotFound();
+        }
+
+        var student = await _db.Students.FindAsync(studentId.Value);
+        if (student == null)
+        {
+            return NotFound();
+        }
+
+        _db.Students.Remove(student);
         await _db.SaveChangesAsync();
         return RedirectToAction("Index", new { courseId, groupId });
     }

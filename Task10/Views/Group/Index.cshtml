@@ -16,7 +16,8 @@
                     <div class="ms-2 me-auto">
                         <div class="fw-bold">@item.Name</div>
                     </div>
-                    <a asp-action="Edit" asp-route-groupId="@item.Id" asp-route-courseId="@ViewBag.CourseId" class="btn btn-primary rounded-pill">Edit</a>
+                    <a asp-controller="Group" asp-action="Edit" asp-route-groupId="@item.Id" asp-route-courseId="@ViewBag.CourseId"
+                       class="btn btn-primary rounded-pill">Edit</a>
                     <form asp-action="Delete" method="post" asp-route-groupId="@item.Id" asp-route-courseId="@ViewBag.CourseId" >
                         <input class="btn btn-danger rounded-pill" type="submit" value="Delete"/>
                     </form>

@@ -5,7 +5,7 @@ using Task10.Models;
 
 namespace Task10.Controllers;
 
-public class CourseController: Controller
+public class CourseController : Controller
 {
     private readonly ApplicationContext _db;
 
@@ -20,8 +20,8 @@ public class CourseController: Controller
         var courses = await _db.Courses.ToListAsync();
         return View(courses);
     }
-    
-    
+
+
     [Route("courses/create")]
     public IActionResult Create()
     {
@@ -36,7 +36,7 @@ public class CourseController: Controller
         await _db.SaveChangesAsync();
         return RedirectToAction("Index");
     }
-    
+
     [Route("courses/{courseId}/edit")]
     public async Task<IActionResult> Edit(int? courseId)
     {
@@ -44,7 +44,7 @@ public class CourseController: Controller
         {
             return NotFound();
         }
-    
+
         var course = await _db.Courses.FindAsync(courseId.Value);
         if (course == null)
         {
@@ -53,8 +53,8 @@ public class CourseController: Controller
 
         return View(course);
     }
-    
-    
+
+
     [HttpPost]
     [Route("courses/{courseId}/edit")]
     public async Task<IActionResult> Edit(int? courseId, Course course)
@@ -63,12 +63,13 @@ public class CourseController: Controller
         {
             return NotFound();
         }
+
         course.Id = courseId.Value;
         _db.Courses.Update(course);
         await _db.SaveChangesAsync();
         return RedirectToAction("Index");
     }
-    
+
     [HttpPost]
     [Route("courses/{courseId?}/delete")]
     public async Task<IActionResult> Delete(int? courseId)
@@ -77,15 +78,15 @@ public class CourseController: Controller
         {
             return NotFound();
         }
+
         var course = await _db.Courses.FindAsync(courseId.Value);
         if (course == null)
         {
             return NotFound();
         }
+
         _db.Courses.Remove(course);
         await _db.SaveChangesAsync();
         return RedirectToAction("Index");
     }
-
-    
 }
