@@ -16,19 +16,18 @@
                     <div class="ms-2 me-auto">
                         <div class="fw-bold">@item.Name</div>
                     </div>
-                    @* <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary rounded-pill">Edit</a> *@
-                    @* <form asp-action="Delete" method="post" asp-route-id="@item.Id"> *@
-                    @*     <input class="btn btn-danger rounded-pill" type="submit" value="Delete"/> *@
-                    @* </form> *@
-                    @* <a  asp-action="Delete"  asp-route-id="@item.Id" class="btn btn-danger rounded-pill">Delete</a> *@
-                    <a class="btn btn-secondary rounded-pill">Groups</a>
+                    <a asp-action="Edit" asp-route-groupId="@item.Id" asp-route-courseId="@ViewBag.CourseId" class="btn btn-primary rounded-pill">Edit</a>
+                    <form asp-action="Delete" method="post" asp-route-groupId="@item.Id" asp-route-courseId="@ViewBag.CourseId" >
+                        <input class="btn btn-danger rounded-pill" type="submit" value="Delete"/>
+                    </form>
+                    <a class="btn btn-secondary rounded-pill">Students</a>
                 </li>
             }
         </ol>
     </div>
     
     <div class="container m-1">
-         <a class="btn btn-primary" asp-action="Create">Create</a>
+         <a class="btn btn-primary" asp-action="Create" asp-route-courseId="@ViewBag.CourseId">Create</a>
     </div>
 
 </div>

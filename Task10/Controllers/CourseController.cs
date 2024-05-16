@@ -14,18 +14,22 @@ public class CourseController: Controller
         _db = db;
     }
 
+    [Route("")]
     public async Task<IActionResult> Index()
     {
         var courses = await _db.Courses.ToListAsync();
         return View(courses);
     }
     
+    
+    [Route("courses/create")]
     public IActionResult Create()
     {
         return View();
     }
 
     [HttpPost]
+    [Route("courses/create")]
     public async Task<IActionResult> Create(Course course)
     {
         await _db.Courses.AddAsync(course);
@@ -33,6 +37,7 @@ public class CourseController: Controller
         return RedirectToAction("Index");
     }
     
+    [Route("courses/{courseId}/edit")]
     public async Task<IActionResult> Edit(int? courseId)
     {
         if (!courseId.HasValue)
@@ -51,14 +56,21 @@ public class CourseController: Controller
     
     
     [HttpPost]
-    public async Task<IActionResult> Edit(Course course)
+    [Route("courses/{courseId}/edit")]
+    public async Task<IActionResult> Edit(int? courseId, Course course)
     {
+        if (!courseId.HasValue)
+        {
+            return NotFound();
+        }
+        course.Id = courseId.Value;
         _db.Courses.Update(course);
         await _db.SaveChangesAsync();
         return RedirectToAction("Index");
     }
     
     [HttpPost]
+    [Route("courses/{courseId?}/delete")]
     public async Task<IActionResult> Delete(int? courseId)
     {
         if (!courseId.HasValue)

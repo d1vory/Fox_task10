@@ -24,8 +24,10 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Course}/{action=Index}/{courseId?}");
+app.MapControllers(); 
+
+// app.MapControllerRoute(
+//     name: "default",
+//     pattern: "{controller=Course}/{action=Index}/{courseId?}");
 
 app.Run();
