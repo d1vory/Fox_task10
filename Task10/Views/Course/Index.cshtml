@@ -16,12 +16,12 @@
                         <div class="fw-bold">@item.Name</div>
                         @item.Description
                     </div>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary rounded-pill">Edit</a>
-                    <form asp-action="Delete" method="post" asp-route-id="@item.Id">
+                    <a asp-action="Edit" asp-route-courseId="@item.Id" class="btn btn-primary rounded-pill">Edit</a>
+                    <form asp-action="Delete" method="post" asp-route-courseId="@item.Id">
                         <input class="btn btn-danger rounded-pill" type="submit" value="Delete"/>
                     </form>
                     @* <a  asp-action="Delete"  asp-route-id="@item.Id" class="btn btn-danger rounded-pill">Delete</a> *@
-                    <a class="btn btn-secondary rounded-pill">Groups</a>
+                    <a asp-controller="Group" asp-action="Index" asp-route-courseId="@item.Id" class="btn btn-secondary rounded-pill">Groups</a>
                 </li>
             }
         </ol>

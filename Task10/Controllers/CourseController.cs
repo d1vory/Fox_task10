@@ -33,14 +33,14 @@ public class CourseController: Controller
         return RedirectToAction("Index");
     }
     
-    public async Task<IActionResult> Edit(int? id)
+    public async Task<IActionResult> Edit(int? courseId)
     {
-        if (!id.HasValue)
+        if (!courseId.HasValue)
         {
             return NotFound();
         }
     
-        var course = await _db.Courses.FindAsync(id.Value);
+        var course = await _db.Courses.FindAsync(courseId.Value);
         if (course == null)
         {
             return NotFound();
@@ -58,31 +58,14 @@ public class CourseController: Controller
         return RedirectToAction("Index");
     }
     
-    // public async Task<IActionResult> Delete(int? id)
-    // {
-    //     if (!id.HasValue)
-    //     {
-    //         return NotFound();
-    //     }
-    //
-    //     var course = await _db.Courses.FindAsync(id.Value);
-    //     if (course == null)
-    //     {
-    //         return NotFound();
-    //     }
-    //
-    //     return View(course);
-    // }
-    //
-    
     [HttpPost]
-    public async Task<IActionResult> Delete(int? id)
+    public async Task<IActionResult> Delete(int? courseId)
     {
-        if (!id.HasValue)
+        if (!courseId.HasValue)
         {
             return NotFound();
         }
-        var course = await _db.Courses.FindAsync(id.Value);
+        var course = await _db.Courses.FindAsync(courseId.Value);
         if (course == null)
         {
             return NotFound();
