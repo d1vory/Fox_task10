@@ -1,7 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using Task10.Data;
 using Task10.Models;
+using Task10.Utils;
 
 namespace Task10.Controllers;
 
@@ -21,6 +25,12 @@ public class GroupController : Controller
         if (!courseId.HasValue)
         {
             return NotFound();
+        }
+
+        if (TempData.ContainsKey("deleteError"))
+        {
+            var splittedError = TempData["deleteError"].ToString().Split(",");
+            ModelState.AddModelError(splittedError[0], splittedError[1]);
         }
 
         var groups = await _db.Groups.Where(g => g.CourseId == courseId.Value).ToListAsync();
@@ -84,6 +94,12 @@ public class GroupController : Controller
         if (!courseId.HasValue || !groupId.HasValue)
         {
             return NotFound();
+        }
+
+        if (_db.Students.Any(s => s.GroupId == groupId))
+        {
+            TempData["deleteError"] = $"{groupId.Value}, There are students in this group";
+            return RedirectToAction(nameof(Index), new { courseId });
         }
 
         var group = await _db.Groups.FindAsync(groupId.Value);
