@@ -12,6 +12,9 @@
             <div class="mb-3">
                 <label asp-for="Name" class="form-label"></label>
                 <input asp-for="Name" class="form-control" >
+                <span class="text-danger">
+                    @Html.ValidationMessageFor(c => c.Name)
+                </span>
             </div>
             
             <div class="mb-3">

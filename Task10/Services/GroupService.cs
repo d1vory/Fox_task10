@@ -3,7 +3,7 @@ using Task10.Data;
 
 namespace Task10.Services;
 
-public class GroupService: ICrudService<Group>
+public class GroupService
 {
     private readonly ApplicationContext _db;
 

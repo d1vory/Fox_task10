@@ -3,17 +3,16 @@ using Microsoft.EntityFrameworkCore;
 using Task10.Data;
 using Task10.Models;
 using Task10.Services;
+using Task10.Utils;
 
 namespace Task10.Controllers;
 
 public class CourseController : Controller
 {
     private readonly CourseService _courseService;
-    private readonly ApplicationContext _db;
 
     public CourseController(CourseService courseService)
     {
-        _db = new ApplicationContext();
         _courseService = courseService;
     }
 
@@ -35,20 +34,27 @@ public class CourseController : Controller
     [Route("courses/create")]
     public async Task<IActionResult> Create(Course course)
     {
-        await _db.Courses.AddAsync(course);
-        await _db.SaveChangesAsync();
+        try
+        {
+            await _courseService.Create(course);
+        }
+        catch (ApplicationException ex)
+        {
+            ModelState.AddModelError("Name", ex.Message);
+            return View();
+        }
         return RedirectToAction("Index");
     }
 
     [Route("courses/{courseId}/edit")]
     public async Task<IActionResult> Edit(int? courseId)
     {
-        if (!courseId.HasValue)
+        if (!UtilService.IsParamsFilled(courseId))
         {
             return NotFound();
         }
 
-        var course = await _db.Courses.FindAsync(courseId.Value);
+        var course = await _courseService.Retrieve(courseId.Value);
         if (course == null)
         {
             return NotFound();
@@ -62,14 +68,12 @@ public class CourseController : Controller
     [Route("courses/{courseId}/edit")]
     public async Task<IActionResult> Edit(int? courseId, Course course)
     {
-        if (!courseId.HasValue)
+        if (!UtilService.IsParamsFilled(courseId))
         {
             return NotFound();
         }
 
-        course.Id = courseId.Value;
-        _db.Courses.Update(course);
-        await _db.SaveChangesAsync();
+        await _courseService.Update(course, courseId);
         return RedirectToAction("Index");
     }
 
@@ -77,19 +81,12 @@ public class CourseController : Controller
     [Route("courses/{courseId?}/delete")]
     public async Task<IActionResult> Delete(int? courseId)
     {
-        if (!courseId.HasValue)
+        if (!UtilService.IsParamsFilled(courseId))
         {
             return NotFound();
         }
 
-        var course = await _db.Courses.FindAsync(courseId.Value);
-        if (course == null)
-        {
-            return NotFound();
-        }
-
-        _db.Courses.Remove(course);
-        await _db.SaveChangesAsync();
+        await _courseService.Delete(courseId.Value);
         return RedirectToAction("Index");
     }
 }
