@@ -2,22 +2,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Task10.Data;
 using Task10.Models;
+using Task10.Services;
 
 namespace Task10.Controllers;
 
 public class CourseController : Controller
 {
+    private readonly CourseService _courseService;
     private readonly ApplicationContext _db;
 
-    public CourseController(ApplicationContext db)
+    public CourseController(CourseService courseService)
     {
-        _db = db;
+        _db = new ApplicationContext();
+        _courseService = courseService;
     }
 
     [Route("")]
     public async Task<IActionResult> Index()
     {
-        var courses = await _db.Courses.ToListAsync();
+        var courses = await _courseService.List();
         return View(courses);
     }
 

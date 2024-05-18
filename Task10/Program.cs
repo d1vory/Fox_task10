@@ -1,11 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using Task10.Data;
+using Task10.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationContext>();
+builder.Services.AddTransient<CourseService>();
 
 var app = builder.Build();
 

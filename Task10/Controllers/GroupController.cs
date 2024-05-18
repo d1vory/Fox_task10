@@ -2,17 +2,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Task10.Data;
 using Task10.Models;
+using Task10.Services;
 
 namespace Task10.Controllers;
 
 [Route("courses/{courseId}/groups")]
 public class GroupController : Controller
 {
+    private readonly GroupService _groupService;
     private readonly ApplicationContext _db;
 
-    public GroupController(ApplicationContext db)
+    public GroupController(GroupService groupService)
     {
-        _db = db;
+        _db = new ApplicationContext();
+        _groupService = groupService;
     }
 
     [Route("")]
