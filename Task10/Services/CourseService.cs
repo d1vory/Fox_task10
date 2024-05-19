@@ -64,6 +64,10 @@ public class CourseService
 
     public async Task ValidateName(string name, int? id = null)
     {
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            throw new ApplicationException("Name should be filled");
+        }
         if (await _db.Courses.AnyAsync(c => c.Name == name && c.Id != id))
         {
             throw new ApplicationException("This name already exists");

@@ -72,8 +72,16 @@ public class CourseController : Controller
         {
             return NotFound();
         }
-
-        await _courseService.Update(course, courseId);
+        
+        try
+        {
+            await _courseService.Update(course, courseId);
+        }
+        catch (ApplicationException ex)
+        {
+            ModelState.AddModelError("Name", ex.Message);
+            return View();
+        }
         return RedirectToAction("Index");
     }
 

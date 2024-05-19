@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using Task10.Data;
 using Task10.Services;
 
@@ -8,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationContext>();
 builder.Services.AddTransient<CourseService>();
+builder.Services.AddTransient<GroupService>();
 
 var app = builder.Build();
 

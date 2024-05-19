@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Task10.Data;
 using Task10.Models;
 using Task10.Services;
+using Task10.Utils;
 
 namespace Task10.Controllers;
 
@@ -21,7 +22,7 @@ public class GroupController : Controller
     [Route("")]
     public async Task<IActionResult> Index(int? courseId)
     {
-        if (!courseId.HasValue)
+        if (!UtilService.IsParamsFilled(courseId))
         {
             return NotFound();
         }
@@ -32,7 +33,7 @@ public class GroupController : Controller
             ModelState.AddModelError(splittedError[0], splittedError[1]);
         }
 
-        var groups = await _db.Groups.Where(g => g.CourseId == courseId.Value).ToListAsync();
+        var groups = await _groupService.List(courseId.Value);
         ViewBag.CourseId = courseId;
         return View(groups);
     }
@@ -47,26 +48,38 @@ public class GroupController : Controller
     [Route("create")]
     public async Task<IActionResult> Create(int? courseId, Group group)
     {
-        await _db.Groups.AddAsync(group);
-        await _db.SaveChangesAsync();
+        if (!UtilService.IsParamsFilled(courseId))
+        {
+            return NotFound();
+        }
+
+        try
+        {
+            await _groupService.Create(group);
+        }
+        catch (ApplicationException ex)
+        {
+            ModelState.AddModelError("Name", ex.Message);
+            return View();
+        }
         return RedirectToAction("Index", new { courseId });
     }
 
     [Route("{groupId}/edit")]
     public async Task<IActionResult> Edit(int? courseId, int? groupId)
     {
-        if (!courseId.HasValue || !groupId.HasValue)
+        if (!UtilService.IsParamsFilled(courseId, groupId))
         {
             return NotFound();
         }
 
-        var group = await _db.Groups.FindAsync(groupId.Value);
+        var group = await _groupService.Retrieve(groupId.Value);
         if (group == null)
         {
             return NotFound();
         }
 
-        ViewBag.CourseId = courseId;
+        ViewBag.CourseId = courseId.Value;
         return View(group);
     }
 
@@ -75,14 +88,20 @@ public class GroupController : Controller
     [Route("{groupId}/edit")]
     public async Task<IActionResult> Edit(int? courseId, int? groupId, Group group)
     {
-        if (!courseId.HasValue || !groupId.HasValue)
+        if (!UtilService.IsParamsFilled(courseId, groupId))
         {
             return NotFound();
         }
-
-        group.Id = groupId.Value;
-        _db.Groups.Update(group);
-        await _db.SaveChangesAsync();
+        try
+        {
+            await _groupService.Update(group, groupId.Value);
+        }
+        catch (ApplicationException ex)
+        {
+            ModelState.AddModelError("Name", ex.Message);
+            return View();
+        }
+        
         return RedirectToAction("Index", new { courseId });
     }
 
@@ -90,25 +109,21 @@ public class GroupController : Controller
     [Route("{groupId}/delete")]
     public async Task<IActionResult> Delete(int? courseId, int? groupId)
     {
-        if (!courseId.HasValue || !groupId.HasValue)
+        if (!UtilService.IsParamsFilled(courseId, groupId))
         {
             return NotFound();
         }
 
-        if (_db.Students.Any(s => s.GroupId == groupId))
+        try
+        {
+            await _groupService.Delete(groupId.Value);
+        }
+        catch(ApplicationException ex)
         {
             TempData["deleteError"] = $"{groupId.Value}, There are students in this group";
             return RedirectToAction(nameof(Index), new { courseId });
         }
-
-        var group = await _db.Groups.FindAsync(groupId.Value);
-        if (group == null)
-        {
-            return NotFound();
-        }
-
-        _db.Groups.Remove(group);
-        await _db.SaveChangesAsync();
+        
         return RedirectToAction("Index", new { courseId });
     }
 }
