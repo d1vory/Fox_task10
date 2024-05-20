@@ -1,0 +1,12 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=30383f68_002D7f5c_002D43fe_002D941c_002D9fb52e98c02c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="TestIsParamsFilled" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;MSTest::5372CE69-679D-4C7B-93F0-2A29DC0B5073::net8.0::TestTask10.TestUtilService.TestIsParamsFilled&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::5372CE69-679D-4C7B-93F0-2A29DC0B5073::net8.0::TestTask10.TestCourseService.TestList&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::5372CE69-679D-4C7B-93F0-2A29DC0B5073::net8.0::TestTask10.TestCourseService.TestUpdate&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::5372CE69-679D-4C7B-93F0-2A29DC0B5073::net8.0::TestTask10.TestCourseService.TestValidateName&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::5372CE69-679D-4C7B-93F0-2A29DC0B5073::net8.0::TestTask10.TestCourseService&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::5372CE69-679D-4C7B-93F0-2A29DC0B5073::net8.0::TestTask10.TestGroupService&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::5372CE69-679D-4C7B-93F0-2A29DC0B5073::net8.0::TestTask10.TestStudentService&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

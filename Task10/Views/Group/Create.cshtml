@@ -1,0 +1,23 @@
+@model Group
+
+<div>
+    
+    <div>
+        <h2>Add new group</h2>
+    </div>
+
+    <div>
+        <form asp-action="Create" asp-controller="Group">
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control">
+                <span class="text-danger">
+                    @Html.ValidationMessageFor(c => c.Name)
+                </span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+    </div>
+</div>

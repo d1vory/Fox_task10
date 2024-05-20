@@ -1,7 +1,14 @@
+using Task10.Data;
+using Task10.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<BaseApplicationContext, ApplicationContext>();
+builder.Services.AddTransient<CourseService>();
+builder.Services.AddTransient<GroupService>();
+builder.Services.AddTransient<StudentService>();
 
 var app = builder.Build();
 
@@ -20,8 +27,10 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllers(); 
+
+// app.MapControllerRoute(
+//     name: "default",
+//     pattern: "{controller=Course}/{action=Index}/{courseId?}");
 
 app.Run();
