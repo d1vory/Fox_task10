@@ -52,6 +52,11 @@ public class CourseService
 
     public async Task Delete(int id)
     {
+        if (await _db.Groups.AnyAsync(s => s.CourseId == id))
+        {
+            throw new ApplicationException("There are groups in this course");
+        }
+        
         var course = await _db.Courses.FindAsync(id);
         if (course == null)
         {

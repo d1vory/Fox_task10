@@ -67,11 +67,12 @@ public class TestCourseService
     [TestMethod]
     public async Task TestDelete()
     {
-        var item = await db.Courses.FindAsync(1);
-        Assert.IsNotNull(item);
-        await _courseService.Delete(item.Id);
+        var courseWithGroups = await db.Groups.FindAsync(1);
+        Assert.IsNotNull(courseWithGroups);
+        await Assert.ThrowsExceptionAsync<ApplicationException>(async () => await _courseService.Delete(courseWithGroups.Id));
         
-        var item2 = await db.Courses.FindAsync(1);
+        await _courseService.Delete(5);
+        var item2 = await db.Courses.FindAsync(5);
         Assert.IsNull(item2);
     }
 
