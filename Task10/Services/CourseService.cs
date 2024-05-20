@@ -6,9 +6,9 @@ namespace Task10.Services;
 
 public class CourseService
 {
-    private readonly ApplicationContext _db;
+    private readonly BaseApplicationContext _db;
 
-    public CourseService(ApplicationContext db)
+    public CourseService(BaseApplicationContext db)
     {
         _db = db;
     }
