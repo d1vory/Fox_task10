@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<ApplicationContext>();
+builder.Services.AddDbContext<BaseApplicationContext, ApplicationContext>();
 builder.Services.AddTransient<CourseService>();
 builder.Services.AddTransient<GroupService>();
 builder.Services.AddTransient<StudentService>();
