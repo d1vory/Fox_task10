@@ -8,6 +8,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationContext>();
 builder.Services.AddTransient<CourseService>();
 builder.Services.AddTransient<GroupService>();
+builder.Services.AddTransient<StudentService>();
 
 var app = builder.Build();
 

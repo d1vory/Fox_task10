@@ -3,29 +3,31 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Task10.Data;
 using Task10.Models;
+using Task10.Services;
+using Task10.Utils;
 
 namespace Task10.Controllers;
 
 [Route("courses/{courseId}/groups/{GroupId}/students")]
 public class StudentController : Controller
 {
-    private readonly ApplicationContext _db;
+    private readonly StudentService _studentService;
 
-    public StudentController(ApplicationContext db)
+    public StudentController(StudentService studentService)
     {
-        _db = db;
+        _studentService = studentService;
     }
 
 
     [Route("")]
     public async Task<IActionResult> Index(int? courseId, int? groupId)
     {
-        if (!courseId.HasValue || !groupId.HasValue)
+        if (!UtilService.IsParamsFilled(courseId, groupId))
         {
             return NotFound();
         }
 
-        var students = await _db.Students.Where(g => g.GroupId == groupId.Value).ToListAsync();
+        var students = await _studentService.List(groupId.Value);
         ViewBag.CourseId = courseId;
         ViewBag.GroupId = groupId;
         return View(students);
@@ -34,7 +36,7 @@ public class StudentController : Controller
     [Route("create")]
     public IActionResult Create(int? courseId, int? groupId)
     {
-        if (!courseId.HasValue || !groupId.HasValue)
+        if (!UtilService.IsParamsFilled(courseId, groupId))
         {
             return NotFound();
         }
@@ -46,20 +48,19 @@ public class StudentController : Controller
     [Route("create")]
     public async Task<IActionResult> Create(int? courseId, int? groupId, Student student)
     {
-        await _db.Students.AddAsync(student);
-        await _db.SaveChangesAsync();
+        await _studentService.Create(student);
         return RedirectToAction("Index", new { courseId, groupId });
     }
 
     [Route("{studentId}/edit")]
     public async Task<IActionResult> Edit(int? courseId, int? groupId, int? studentId)
     {
-        if (!courseId.HasValue || !groupId.HasValue || !studentId.HasValue)
+        if (!UtilService.IsParamsFilled(courseId, groupId, studentId))
         {
             return NotFound();
         }
 
-        var student = await _db.Students.FindAsync(studentId.Value);
+        var student = await _studentService.Retrieve(studentId.Value);
         if (student == null)
         {
             return NotFound();
@@ -75,14 +76,12 @@ public class StudentController : Controller
     [Route("{studentId}/edit")]
     public async Task<IActionResult> Edit(int? courseId, int? groupId, int? studentId, Student student)
     {
-        if (!courseId.HasValue || !groupId.HasValue || !studentId.HasValue)
+        if (!UtilService.IsParamsFilled(courseId, groupId, studentId))
         {
             return NotFound();
         }
 
-        student.Id = studentId.Value;
-        _db.Students.Update(student);
-        await _db.SaveChangesAsync();
+        await _studentService.Update(student, studentId);
         return RedirectToAction("Index", new { courseId, groupId });
     }
 
@@ -90,19 +89,12 @@ public class StudentController : Controller
     [Route("{studentId}/delete")]
     public async Task<IActionResult> Delete(int? courseId, int? groupId, int? studentId)
     {
-        if (!courseId.HasValue || !groupId.HasValue || !studentId.HasValue)
+        if (!UtilService.IsParamsFilled(courseId, groupId, studentId))
         {
             return NotFound();
         }
 
-        var student = await _db.Students.FindAsync(studentId.Value);
-        if (student == null)
-        {
-            return NotFound();
-        }
-
-        _db.Students.Remove(student);
-        await _db.SaveChangesAsync();
+        await _studentService.Delete(studentId.Value);
         return RedirectToAction("Index", new { courseId, groupId });
     }
 }
