@@ -6,9 +6,9 @@ namespace Task10.Services;
 
 public class GroupService
 {
-    private readonly ApplicationContext _db;
+    private readonly BaseApplicationContext _db;
 
-    public GroupService(ApplicationContext db)
+    public GroupService(BaseApplicationContext db)
     {
         _db = db;
     }

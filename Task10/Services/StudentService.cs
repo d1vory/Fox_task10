@@ -6,9 +6,9 @@ namespace Task10.Services;
 
 public class StudentService
 {
-    private readonly ApplicationContext _db;
+    private readonly BaseApplicationContext _db;
 
-    public StudentService(ApplicationContext db)
+    public StudentService(BaseApplicationContext db)
     {
         _db = db;
     }
@@ -24,10 +24,10 @@ public class StudentService
         return student;
     }
     
-    public Task<Student> Create(string firstName, string lastName)
+    public async Task<Student> Create(string firstName, string lastName, int groupId)
     {
-        var student = new Student() { FirstName = firstName, LastName = lastName };
-        return Create(student);
+        var student = new Student() { FirstName = firstName, LastName = lastName, GroupId = groupId};
+        return await Create(student);
     }
 
     public async Task<Student> Create(Student student)

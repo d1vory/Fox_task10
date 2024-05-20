@@ -6,5 +6,7 @@
     &lt;TestId&gt;MSTest::5372CE69-679D-4C7B-93F0-2A29DC0B5073::net8.0::TestTask10.TestCourseService.TestUpdate&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;MSTest::5372CE69-679D-4C7B-93F0-2A29DC0B5073::net8.0::TestTask10.TestCourseService.TestValidateName&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;MSTest::5372CE69-679D-4C7B-93F0-2A29DC0B5073::net8.0::TestTask10.TestCourseService&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::5372CE69-679D-4C7B-93F0-2A29DC0B5073::net8.0::TestTask10.TestGroupService&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::5372CE69-679D-4C7B-93F0-2A29DC0B5073::net8.0::TestTask10.TestStudentService&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
